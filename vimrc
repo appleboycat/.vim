@@ -28,9 +28,9 @@ set cursorline
 
 syntax enable
 let g:solarized_termcolors=256
+set background=dark
 set termguicolors
 colorscheme solarized
-set background=dark
 "set background=light
 
 "colorscheme inkpot
@@ -56,7 +56,8 @@ autocmd InsertEnter * se cul
 " hi Number                                       ctermfg=red
 hi cursorline   cterm=bold
 " hi Search                  ctermbg=white   ctermfg=black
-hi Search       cterm=underline ctermbg=white   ctermfg=black
+hi Search                  guibg=#ffffff guifg=black
+" hi Search       cterm=underline ctermbg=white   ctermfg=black
 
 let mapleader = ","
 map <silent> <leader>ss :source ~/.vimrc<cr>
