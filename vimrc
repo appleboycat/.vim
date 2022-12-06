@@ -20,9 +20,7 @@ set shiftwidth=4
 "set number relativenumber
 set number
 set cursorline
-" set cursorcolumn                        “高亮当前列
-" highlight CursorLine   cterm=NONE ctermbg=black ctermfg=yellow guibg=NONE guifg=NONE
-" highlight CursorLine   cterm=bold ctermbg=black ctermfg=None guibg=NONE guifg=NONE
+"set cursorcolumn
 """""""""""""""""""""""""""""""""""
 
 
@@ -55,44 +53,44 @@ autocmd InsertEnter * se cul
 " hi comment      cterm=NONE ctermfg=DarkGrey    guibg=#000000   guifg=Black
 " hi Number                                       ctermfg=red
 hi cursorline   cterm=bold
-" hi Search                  ctermbg=white   ctermfg=black
-hi Search                  guibg=#ffffff guifg=black
-" hi Search       cterm=underline ctermbg=white   ctermfg=black
+" hi CursorLine   cterm=NONE ctermbg=black ctermfg=yellow guibg=NONE guifg=NONE
+" hi CursorLine   cterm=bold ctermbg=black ctermfg=None guibg=NONE guifg=NONE
+
+hi Search       guibg=#ffffff   guifg=black
+" hi Search     cterm=underline ctermbg=white   ctermfg=black
+hi Visual       guibg=pink      guifg=black
+hi SignColumn   guibg=NONE                      ctermbg=NONE
+
+
+
 
 let mapleader = ","
 map <silent> <leader>ss :source ~/.vimrc<cr>
 map <silent> <leader>ee :e ~/.vimrc<cr>
 autocmd! bufwritepost .vimrc source ~/.vimrc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-plug autoload  ???
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" if empty(glob('~/.vim/autoload/plug.vim'))
-  " silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    " \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
 
+
+
+"GitGutter keymap
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+nmap <leader>hp <Plug>(GitGutterPreviewHunk)
+" let g:gitgutter_highlight_lines = 1
+" let g:gitgutter_highlight_linenrs = 1
+" vim-gitgutter used to do this by default:
+highlight! link SignColumn LineNr
+" set signcolumn=yes
+" hi GitGutterAdd    guifg=#009900 ctermfg=2
+" hi GitGutterChange guifg=#bbbb00 ctermfg=3
+" hi GitGutterDelete guifg=#ff2222 ctermfg=1
+" hi link GitGutterChangeLine DiffText
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-"function! BuildYCM(info)
-  " info is a dictionary with 3 fields
-  " - name:   name of the plugin
-  " - status: 'installed', 'updated', or 'unchanged'
-  " - force:  set on PlugInstall! or PlugUpdate!
-"  if a:info.status == 'installed' || a:info.force
-"    !./install.py
-"  endif
-"endfunction
-"
-"
 "Plug 'inkarkat/vim-mark' not working 
-
-
 Plug 'junegunn/vim-easy-align'
 Plug 'universal-ctags/ctags'
 Plug 'scrooloose/nerdtree'
@@ -107,27 +105,21 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'NoahTheDuke/vim-just'
 
 
-
 " 2022.7.27 for rust
 Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
 " Plug 'jiangmiao/auto-pairs'
 
 Plug 'dense-analysis/ale'
 " Plug 'itchyny/lightline.vim'
 " Plug 'maximbaz/lightline-ale'
 "
-"
-"
-"
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " markdown content
 Plug 'jszakmeister/markdown2ctags'
-" Plug 'majutsushi/tagbar'
 " Plug 'wfxr/minimap.vim'
 Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 Plug 'tpope/vim-surround'
@@ -140,6 +132,10 @@ Plug 'linjiX/LeaderF-git'
 " for git 
 Plug 'tpope/vim-fugitive'
 Plug 'zivyangll/git-blame.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+Plug 'junegunn/gv.vim'
+Plug 'rhysd/conflict-marker.vim'
 
 Plug 'APZelos/blamer.nvim'
 
@@ -147,11 +143,26 @@ Plug 'APZelos/blamer.nvim'
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+
+
+" disable the default highlight group
+let g:conflict_marker_highlight_group = ''
+" Include text after begin and end markers
+" let g:conflict_marker_begin = '^<<<<<<< .*$'
+" let g:conflict_marker_end   = '^>>>>>>> .*$'
+highlight ConflictMarkerBegin guibg=#2f7366
+highlight ConflictMarkerOurs guibg=#2e5049
+highlight ConflictMarkerTheirs guibg=#344f69
+highlight ConflictMarkerEnd guibg=#2f628e
+highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
+"co 
+"ct
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>hh :History<cr>
-" nmap <silent> <leader>ff :Files<cr>
+nmap <silent> <leader>ff :Files<cr>
 nmap <silent> <leader>gf :GFiles?<cr>
 nmap <silent> <leader>tt :Tags<cr>
 nmap <silent> <leader>ll :Lines<cr>
@@ -176,7 +187,6 @@ let g:Lf_DefaultMode = "Regex"
 noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
 noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-
 noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 
 " noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
@@ -215,8 +225,6 @@ let Tlist_Exit_OnlyWindow = 1
 let Tlist_Use_Left_Window = 1
 " let Tlist_Use_Right_Window = 1
 let Tlist_GainFocus_On_ToggleOpen = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" map <silent> <F9> :TlistToggle<cr> 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set viminfo='10,"100,:20,%,n~/.viminfo
 set sessionoptions-=curdir
@@ -283,18 +291,9 @@ function! s:compileByFileType()
 
       " Symbol renaming.
       nmap <leader>rn <Plug>(coc-rename)
-       
       " Formatting selected code.
       xmap <leader>f  <Plug>(coc-format-selected)
       nmap <leader>f  <Plug>(coc-format-selected)
-
-
-
-        " map <F10> <Esc>:!g++ % -Wall -ansi -Wmain -o %< -lm
-        " map <F11> <Esc>:!%<
-  " elseif &filetype=="java"
-    " map <F10> <Esc>:!javac %
-    " map <F11> <Esc>:!java %<
   endif
 endfunction
 
@@ -691,20 +690,20 @@ let g:lightline#ale#indicator_ok = "\uf00c"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " git-blamer 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:blamer_enabled = 1
-let g:blamer_delay = 500
-"default 1
-let g:blamer_show_in_visual_modes = 1
-"default 1
-let g:blamer_show_in_insert_modes = 0
-"default: ' '
-let g:blamer_prefix = ' < '
-"default: '<committer>, <committer-time> ? <summary>'
-"Available options: <author>, <author-mail>, <author-time>, <committer>, <committer-mail>, <committer-time>, <summary>, <commit-short>, <commit-long>.
-"let g:blamer_template = '<committer> <summary>'
-"default: '%d/%m/%y %H:%M'
-let g:blamer_date_format = ' %y/%m/%d'
-"default: link Blamer Comment
+" let g:blamer_enabled = 1
+" let g:blamer_delay = 500
+" "default 1
+" let g:blamer_show_in_visual_modes = 1
+" "default 1
+" let g:blamer_show_in_insert_modes = 0
+" "default: ' '
+" let g:blamer_prefix = ' < '
+" "default: '<committer>, <committer-time> ? <summary>'
+" "Available options: <author>, <author-mail>, <author-time>, <committer>, <committer-mail>, <committer-time>, <summary>, <commit-short>, <commit-long>.
+" "let g:blamer_template = '<committer> <summary>'
+" "default: '%d/%m/%y %H:%M'
+" let g:blamer_date_format = ' %y/%m/%d'
+" default: link Blamer Comment
 " highlight Blamer guifg=lightgrey
 
 
