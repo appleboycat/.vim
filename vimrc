@@ -10,7 +10,6 @@ set backspace=indent,eol,start
 set autoread
 set showmode
 set showmatch
-set cursorline
 set ignorecase smartcase
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 "set termencoding=utf-8,gbk
@@ -21,12 +20,21 @@ set shiftwidth=4
 set number
 set cursorline
 "set cursorcolumn
+" set noswapfile
+set incsearch 
+set nowrapscan
+set formatoptions=
+" set formatoptions=croql
+
 """""""""""""""""""""""""""""""""""
-
-
-syntax enable
-let g:solarized_termcolors=256
+"must set before syntax enable
 set background=dark
+
+if &t_Co > 1
+  syntax enable
+endif
+
+let g:solarized_termcolors=256
 set termguicolors
 colorscheme solarized
 "set background=light
@@ -48,17 +56,20 @@ colorscheme solarized
 :ab #t <string.h>
 :ab #p <mpi.h>
 :ab #o <stdbool.h>
+
+
 autocmd InsertEnter * se cul
 " hi Function     cterm=NONE                      ctermfg=darkblue
 " hi comment      cterm=NONE ctermfg=DarkGrey    guibg=#000000   guifg=Black
 " hi Number                                       ctermfg=red
-hi cursorline   cterm=bold
+hi cursorline   cterm=bold 
+"hi cursorline   cterm=bold guibg=black
 " hi CursorLine   cterm=NONE ctermbg=black ctermfg=yellow guibg=NONE guifg=NONE
 " hi CursorLine   cterm=bold ctermbg=black ctermfg=None guibg=NONE guifg=NONE
 
 hi Search       guibg=#ffffff   guifg=black
-" hi Search     cterm=underline ctermbg=white   ctermfg=black
-hi Visual       guibg=pink      guifg=black
+hi Visual       cterm=reverse 
+"gui=None guibg=#8899ff  guifg=#FFFFFF   
 hi SignColumn   guibg=NONE                      ctermbg=NONE
 
 
@@ -80,6 +91,7 @@ nmap <leader>hp <Plug>(GitGutterPreviewHunk)
 " let g:gitgutter_highlight_linenrs = 1
 " vim-gitgutter used to do this by default:
 highlight! link SignColumn LineNr
+hi MatchParen ctermbg=blue guibg=lightblue
 " set signcolumn=yes
 " hi GitGutterAdd    guifg=#009900 ctermfg=2
 " hi GitGutterChange guifg=#bbbb00 ctermfg=3
@@ -121,7 +133,7 @@ Plug 'vim-airline/vim-airline-themes'
 " markdown content
 Plug 'jszakmeister/markdown2ctags'
 " Plug 'wfxr/minimap.vim'
-Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
+"Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
 Plug 'tpope/vim-surround'
 
 Plug 'majutsushi/tagbar'
@@ -139,6 +151,7 @@ Plug 'rhysd/conflict-marker.vim'
 
 Plug 'APZelos/blamer.nvim'
 
+Plug 'lilydjwg/colorizer'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -170,7 +183,7 @@ nmap <silent> <leader>lp :Locate<space>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Leaderf 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:Lf_GtagsAutoGenerate = 1
+"let g:Lf_GtagsAutoGenerate = 1
 " don't show the help in normal mode
 let g:Lf_HideHelp = 0
 let g:Lf_UseCache = 1
@@ -239,12 +252,18 @@ let g:indent_guides_auto_colors = 0
 hi IndentGuidesOdd  guibg=red   ctermbg=3
 hi IndentGuidesEven guibg=green ctermbg=4
 "highlight MarkWordN ctermbg=Cyan ctermfg=Black guibg=#8CCBEA guifg=Black
-hi MarkWord1  ctermbg=1     ctermfg=Black  guibg=#8CCBEA    guifg=Black
-hi MarkWord2  ctermbg=2     ctermfg=Black  guibg=#A4E57E    guifg=Black
-hi MarkWord3  ctermbg=3     ctermfg=Black  guibg=#FFDB72    guifg=Black
-hi MarkWord4  ctermbg=4     ctermfg=Black  guibg=#FF7272    guifg=Black
-hi MarkWord5  ctermbg=5     ctermfg=Black  guibg=#FFB3FF    guifg=Black
-hi MarkWord6  ctermbg=6     ctermfg=Black  guibg=#9999FF    guifg=Black
+" hi MarkWord1  ctermbg=1     ctermfg=Black  guibg=#8CCBEA    guifg=Black
+" hi MarkWord2  ctermbg=2     ctermfg=Black  guibg=#A4E57E    guifg=Black
+" hi MarkWord3  ctermbg=3     ctermfg=Black  guibg=#FFDB72    guifg=Black
+" hi MarkWord4  ctermbg=4     ctermfg=Black  guibg=#FF7272    guifg=Black
+" hi MarkWord5  ctermbg=5     ctermfg=Black  guibg=#FFB3FF    guifg=Black
+" hi MarkWord6  ctermbg=6     ctermfg=Black  guibg=#9999FF    guifg=Black
+hi MarkWord1  ctermbg=1  ctermfg=Black
+hi MarkWord2  ctermbg=2  ctermfg=Black
+hi MarkWord3  ctermbg=3  ctermfg=Black
+hi MarkWord4  ctermbg=4  ctermfg=Black
+hi MarkWord5  ctermbg=5  ctermfg=Black
+hi MarkWord6  ctermbg=6  ctermfg=Black
 nmap <silent> <leader>hl <Plug>MarkSet
 nmap <silent> <leader>hh <Plug>MarkClear
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -357,7 +376,8 @@ let airline#extensions#ale#open_lnum_symbol = '(L'
 let airline#extensions#ale#close_lnum_symbol = ')'
 
 
-nmap <tab> :bn<cr>
+" nmap <tab> :bn<cr>
+nmap <C-n> :bn<cr>
 nmap <S-tab> :bp<cr>
 nmap <C-q> :bd<cr>
 
@@ -534,7 +554,8 @@ let g:netrw_alto = 0 " 控制预览窗口位于左侧或右侧, 与 netrw_previe
 " let g:netrw_chgwin = 2 " 控制按下 <CR> 的新文件在位于屏幕右侧的 2 号窗口打开, Lex 默认会设为 2
 
 
-if has("code-minimap")
+if 0
+"if has("code-minimap")
     " for minimap
     let g:minimap_width = 10
     let g:minimap_auto_start = 1
@@ -565,7 +586,7 @@ autocmd VimEnter * wincmd 1
 " 在某些情况下自动打开tagbar
 "
 "
-let g:coc_snippet_next = '<tab>'
+" let g:coc_snippet_next = '<tab>'
 
 
 
@@ -690,19 +711,19 @@ let g:lightline#ale#indicator_ok = "\uf00c"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " git-blamer 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let g:blamer_enabled = 1
-" let g:blamer_delay = 500
-" "default 1
-" let g:blamer_show_in_visual_modes = 1
-" "default 1
-" let g:blamer_show_in_insert_modes = 0
-" "default: ' '
-" let g:blamer_prefix = ' < '
-" "default: '<committer>, <committer-time> ? <summary>'
-" "Available options: <author>, <author-mail>, <author-time>, <committer>, <committer-mail>, <committer-time>, <summary>, <commit-short>, <commit-long>.
-" "let g:blamer_template = '<committer> <summary>'
-" "default: '%d/%m/%y %H:%M'
-" let g:blamer_date_format = ' %y/%m/%d'
+let g:blamer_enabled = 1
+let g:blamer_delay = 500
+"default 1
+let g:blamer_show_in_visual_modes = 1
+"default 1
+let g:blamer_show_in_insert_modes = 0
+"default: ' '
+let g:blamer_prefix = ' < '
+"default: '<committer>, <committer-time> ? <summary>'
+"Available options: <author>, <author-mail>, <author-time>, <committer>, <committer-mail>, <committer-time>, <summary>, <commit-short>, <commit-long>.
+"let g:blamer_template = '<committer> <summary>'
+"default: '%d/%m/%y %H:%M'
+let g:blamer_date_format = ' %y/%m/%d'
 " default: link Blamer Comment
 " highlight Blamer guifg=lightgrey
 
@@ -713,3 +734,4 @@ let g:lightline#ale#indicator_ok = "\uf00c"
 
 " cursor disappear solution
 " echo -e "\033[?25h"
+"
