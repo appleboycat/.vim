@@ -22,7 +22,7 @@ set cursorline
 "set cursorcolumn
 " set noswapfile
 set incsearch 
-set nowrapscan
+set wrapscan
 set formatoptions=
 " set formatoptions=croql
 
