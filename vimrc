@@ -16,8 +16,8 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
-"set number relativenumber
 set number
+"set number relativenumber
 set cursorline
 "set cursorcolumn
 set noswapfile
@@ -25,7 +25,6 @@ set incsearch
 set wrapscan
 set formatoptions=
 " set formatoptions=croql
-
 """""""""""""""""""""""""""""""""""
 "must set before syntax enable
 set background=dark
@@ -38,27 +37,9 @@ let g:solarized_termcolors=256
 set termguicolors
 colorscheme solarized
 "set background=light
-
 "colorscheme inkpot
 "colorscheme SolarizedDark
-" colorscheme jellybeans 
-" if &diff
-    " colorscheme jellybeans 
-" endif
-:ab #b #!/bin/bash
-:ab #i #include
-:ab #d #define
-:ab #f #ifdef
-:ab #e #endif
-:ab #s <stdio.h>
-:ab #l <stdlib.h>
-:ab #m <math.h>
-:ab #t <string.h>
-:ab #p <mpi.h>
-:ab #o <stdbool.h>
-
-
-autocmd InsertEnter * se cul
+"colorscheme jellybeans 
 " hi Function     cterm=NONE                      ctermfg=darkblue
 " hi comment      cterm=NONE ctermfg=DarkGrey    guibg=#000000   guifg=Black
 " hi Number                                       ctermfg=red
@@ -66,20 +47,62 @@ hi cursorline   cterm=bold
 "hi cursorline   cterm=bold guibg=black
 " hi CursorLine   cterm=NONE ctermbg=black ctermfg=yellow guibg=NONE guifg=NONE
 " hi CursorLine   cterm=bold ctermbg=black ctermfg=None guibg=NONE guifg=NONE
-
 hi Search       guibg=#ffffff   guifg=black
 hi Visual       cterm=reverse 
 "gui=None guibg=#8899ff  guifg=#FFFFFF   
 hi SignColumn   guibg=NONE                      ctermbg=NONE
 
-
-
 let mapleader = ","
 map <silent> <leader>ss :source ~/.vimrc<cr>
 map <silent> <leader>ee :e ~/.vimrc<cr>
+
+autocmd InsertEnter * se cul
 autocmd! bufwritepost .vimrc source ~/.vimrc
+autocmd FileType * call s:compileByFileType()
+function! s:compileByFileType()
+  if &filetype=="c"
+    if has("cscope")
+      " set csprg=/home/hongdouz/bin/cscope
+      set csto=1
+      set cst
+      set nocsverb
+      " add any database in current directory
+      if filereadable("cscope.out")
+            cs add cscope.out
+      " else add database pointed to by environment
+      elseif $CSCOPE_DB != ""
+      cs add $CSCOPE_DB
+      endif
+      set csverb
+    endif
+      """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      " cscope setting
+      """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+      nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+      nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+      nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+      nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+      nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+      nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+      nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
+      nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+      "nmap <C-@>d :cs find g <C-R>=expand(build_command_tree)<CR><CR>
+      nmap <C-@>r :cs find g build_command_tree<CR>
+  elseif &filetype=="rust"
+      " Use `[g` and `]g` to navigate diagnostics
+      " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 
-
+      nmap <C-@>g <Plug>(coc-definition)
+      nmap <C-@>y <Plug>(coc-type-definition)
+      nmap <C-@>i <Plug>(coc-implementation)
+      nmap <C-@>r <Plug>(coc-references)
+      " Symbol renaming.
+      nmap <F2>rn <Plug>(coc-rename)
+      " Formatting selected code.
+      xmap <leader>f  <Plug>(coc-format-selected)
+      nmap <leader>f  <Plug>(coc-format-selected)
+  endif
+endfunction
 
 
 "GitGutter keymap
@@ -96,10 +119,15 @@ hi MatchParen ctermbg=blue guibg=lightblue
 " hi GitGutterChange guifg=#bbbb00 ctermfg=3
 " hi GitGutterDelete guifg=#ff2222 ctermfg=1
 " hi link GitGutterChangeLine DiffText
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
+""" vim ripgrep"
+" Plug 'wookayin/fzf-ripgrep.vim'
+Plug 'jremmen/vim-ripgrep'
+
 
 "Plug 'inkarkat/vim-mark' not working 
 Plug 'junegunn/vim-easy-align'
@@ -114,7 +142,6 @@ Plug 'tpope/vim-surround'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'NoahTheDuke/vim-just'
-
 
 " 2022.7.27 for rust
 Plug 'rust-lang/rust.vim'
@@ -169,6 +196,7 @@ highlight ConflictMarkerEnd guibg=#2f628e
 highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 "co 
 "ct
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf setting
@@ -274,52 +302,7 @@ nmap <silent> <leader>hl <Plug>MarkSet
 nmap <silent> <leader>hh <Plug>MarkClear
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-function! s:compileByFileType()
-  if &filetype=="c"
-    if has("cscope")
-      " set csprg=/home/hongdouz/bin/cscope
-      set csto=1
-      set cst
-      set nocsverb
-      " add any database in current directory
-      if filereadable("cscope.out")
-            cs add cscope.out
-      " else add database pointed to by environment
-      elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
-      endif
-      set csverb
-    endif
-      """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-      " cscope setting
-      """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-      nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-      nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-      nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-      nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-      nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-      nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-      nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
-      nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-      "nmap <C-@>d :cs find g <C-R>=expand(build_command_tree)<CR><CR>
-      nmap <C-@>r :cs find g build_command_tree<CR>
-  elseif &filetype=="rust"
-      " Use `[g` and `]g` to navigate diagnostics
-      " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 
-      nmap <C-@>g <Plug>(coc-definition)
-      nmap <C-@>y <Plug>(coc-type-definition)
-      nmap <C-@>i <Plug>(coc-implementation)
-      nmap <C-@>r <Plug>(coc-references)
-      " Symbol renaming.
-      nmap <F2>rn <Plug>(coc-rename)
-      " Formatting selected code.
-      xmap <leader>f  <Plug>(coc-format-selected)
-      nmap <leader>f  <Plug>(coc-format-selected)
-  endif
-endfunction
-
-autocmd FileType * call s:compileByFileType()
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -768,3 +751,19 @@ let g:blamer_date_format = ' %y/%m/%d'
 " cursor disappear solution
 " echo -e "\033[?25h"
 "
+:ab #b #!/bin/bash
+:ab #i #include
+:ab #d #define
+:ab #f #ifdef
+:ab #e #endif
+:ab #s <stdio.h>
+:ab #l <stdlib.h>
+:ab #m <math.h>
+:ab #t <string.h>
+:ab #p <mpi.h>
+:ab #o <stdbool.h>
+" 
+":r xxx.txt
+":r !date
+":!ls
+" move cursor to ab, then press K to see help infomation.
