@@ -1,4 +1,4 @@
-"set directory=$HOME/.vim/swap//
+" set directory=$HOME/.vim/swap//
 set nocompatible
 set hlsearch
 set ruler
@@ -20,7 +20,7 @@ set shiftwidth=4
 set number
 set cursorline
 "set cursorcolumn
-" set noswapfile
+set noswapfile
 set incsearch 
 set wrapscan
 set formatoptions=
@@ -71,7 +71,6 @@ hi Search       guibg=#ffffff   guifg=black
 hi Visual       cterm=reverse 
 "gui=None guibg=#8899ff  guifg=#FFFFFF   
 hi SignColumn   guibg=NONE                      ctermbg=NONE
-
 
 
 
@@ -174,12 +173,16 @@ highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " fzf setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>hh :History<cr>
-nmap <silent> <leader>ff :Files<cr>
-nmap <silent> <leader>gf :GFiles?<cr>
-nmap <silent> <leader>tt :Tags<cr>
-nmap <silent> <leader>ll :Lines<cr>
-nmap <silent> <leader>lp :Locate<space>
+nmap <silent> <leader>zh :History<cr>
+nmap <silent> <leader>zf :Files<cr>
+nmap <silent> <leader>zg :GFiles?<cr>
+nmap <silent> <leader>zt :Tags<cr>
+nmap <silent> <leader>zl :Lines<cr>
+nmap <silent> <leader>zp :Locate<space>
+nmap <C-p> :Files<CR>
+" nmap <C-b> :Buffers<CR>
+let g:fzf_action = { 'ctrl-e': 'edit' }
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Leaderf 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -190,20 +193,23 @@ let g:Lf_UseCache = 1
 let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
 " popup mode
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
+" let g:Lf_WindowPosition = 'popup'
+" let g:Lf_PreviewInPopup = 1
+let g:Lf_PreviewInPopup = 0
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
-
-let g:Lf_ShortcutF = "<leader>ff"
+let g:Lf_ShortcutF = "<leader>f"
 let g:Lf_DefaultMode = "Regex"
-noremap <leader>fl :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
-noremap <leader>fb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-noremap <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+" https://github.com/ryanoasis/nerd-fonts
+let g:Lf_ShowDevIcons = 1
+noremap <leader>f :<C-U><C-R>=printf("Leaderf file %s", "")<CR><CR>
+noremap <leader>b :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+" noremap <leader>m :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>l :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 
-" noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
-" noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
+noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
 " search visually selected text literally
 xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
 noremap go :<C-U>Leaderf! rg --recall<CR>
@@ -300,16 +306,13 @@ function! s:compileByFileType()
   elseif &filetype=="rust"
       " Use `[g` and `]g` to navigate diagnostics
       " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-      nmap <silent> [g <Plug>(coc-diagnostic-prev)
-      nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
       nmap <C-@>g <Plug>(coc-definition)
       nmap <C-@>y <Plug>(coc-type-definition)
       nmap <C-@>i <Plug>(coc-implementation)
       nmap <C-@>r <Plug>(coc-references)
-
       " Symbol renaming.
-      nmap <leader>rn <Plug>(coc-rename)
+      nmap <F2>rn <Plug>(coc-rename)
       " Formatting selected code.
       xmap <leader>f  <Plug>(coc-format-selected)
       nmap <leader>f  <Plug>(coc-format-selected)
@@ -317,6 +320,40 @@ function! s:compileByFileType()
 endfunction
 
 autocmd FileType * call s:compileByFileType()
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> rn <Plug>(coc-rename)
+" Go to mappings
+" nmap <silent> Cd <Plug>(coc-definition)
+" nmap <silent> Ct <Plug>(coc-type-definition)
+" nmap <silent> Cp <Plug>(coc-implementation)
+" nmap <silent> Cr <Plug>(coc-references)
+
+" Refactoring mappings
+nmap CR <Plug>(coc-rename)
+nmap CF  <Plug>(coc-format)
+xmap CF  <Plug>(coc-format-selected)
+nmap CA  <Plug>(coc-codeaction)
+xmap CA  <Plug>(coc-codeaction-selected)
+nmap CX  <Plug>(coc-fix-current)
+
+" Coc lists mappings
+nnoremap <silent> Cld  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> Cle  :<C-u>CocList extensions<cr>
+nnoremap <silent> Clc  :<C-u>CocList commands<cr>
+nnoremap <silent> Clo  :<C-u>CocList outline<cr>
+nnoremap <silent> Cls  :<C-u>CocList -I symbols<cr>
+
+" Show info mappings
+nnoremap <silent> Ci :call CocAction('doHover')<CR>
+
+" Highlight current identifier usage in current document
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
 """""""""""""""""""""""""""""""""""""""""""""
@@ -376,7 +413,7 @@ let airline#extensions#ale#open_lnum_symbol = '(L'
 let airline#extensions#ale#close_lnum_symbol = ')'
 
 
-" nmap <tab> :bn<cr>
+nmap <tab> :bn<cr>
 nmap <C-n> :bn<cr>
 nmap <S-tab> :bp<cr>
 nmap <C-q> :bd<cr>
@@ -405,11 +442,11 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <TAB>
+      " \ pumvisible() ? "\<C-n>" :
+      " \ <SID>check_back_space() ? "\<TAB>" :
+      " \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -422,10 +459,6 @@ endfunction
   " inoremap <silent><expr> <c-@> coc#refresh()
 " endif
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
 
 
