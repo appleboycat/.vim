@@ -33,28 +33,10 @@ if &t_Co > 1
   syntax enable
 endif
 
-let g:solarized_termcolors=256
-set termguicolors
-colorscheme solarized
-"set background=light
-"colorscheme inkpot
-"colorscheme SolarizedDark
-"colorscheme jellybeans 
-" hi Function     cterm=NONE                      ctermfg=darkblue
-" hi comment      cterm=NONE ctermfg=DarkGrey    guibg=#000000   guifg=Black
-" hi Number                                       ctermfg=red
-hi cursorline   cterm=bold 
-"hi cursorline   cterm=bold guibg=black
-" hi CursorLine   cterm=NONE ctermbg=black ctermfg=yellow guibg=NONE guifg=NONE
-" hi CursorLine   cterm=bold ctermbg=black ctermfg=None guibg=NONE guifg=NONE
-hi Search       guibg=#ffffff   guifg=black
-hi Visual       cterm=reverse 
-"gui=None guibg=#8899ff  guifg=#FFFFFF   
-hi SignColumn   guibg=NONE                      ctermbg=NONE
+source ~/.vim/rc/displayz.vimrc
+source ~/.vim/rc/plugs.vimrc
+source ~/.vim/rc/maps.vimrc
 
-let mapleader = ","
-map <silent> <leader>ss :source ~/.vimrc<cr>
-map <silent> <leader>ee :e ~/.vimrc<cr>
 
 autocmd InsertEnter * se cul
 autocmd! bufwritepost .vimrc source ~/.vimrc
@@ -99,157 +81,19 @@ function! s:compileByFileType()
       " Symbol renaming.
       nmap <F2>rn <Plug>(coc-rename)
       " Formatting selected code.
-      xmap <leader>f  <Plug>(coc-format-selected)
-      nmap <leader>f  <Plug>(coc-format-selected)
+      xmap <leader>fmt  <Plug>(coc-format-selected)
+      nmap <leader>fmt  <Plug>(coc-format-selected)
   endif
 endfunction
 
 
-"GitGutter keymap
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
-nmap <leader>hp <Plug>(GitGutterPreviewHunk)
-" let g:gitgutter_highlight_lines = 1
-" let g:gitgutter_highlight_linenrs = 1
-" vim-gitgutter used to do this by default:
-highlight! link SignColumn LineNr
-hi MatchParen ctermbg=blue guibg=lightblue
-" set signcolumn=yes
-" hi GitGutterAdd    guifg=#009900 ctermfg=2
-" hi GitGutterChange guifg=#bbbb00 ctermfg=3
-" hi GitGutterDelete guifg=#ff2222 ctermfg=1
-" hi link GitGutterChangeLine DiffText
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-plug
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
-""" vim ripgrep"
-" Plug 'wookayin/fzf-ripgrep.vim'
-Plug 'jremmen/vim-ripgrep'
-
-
-"Plug 'inkarkat/vim-mark' not working 
-Plug 'junegunn/vim-easy-align'
-Plug 'universal-ctags/ctags'
-Plug 'scrooloose/nerdtree'
-"Plug 'scrooloose/nerdcommender'
-"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-surround'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'NoahTheDuke/vim-just'
-
-" 2022.7.27 for rust
-Plug 'rust-lang/rust.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Plug 'jiangmiao/auto-pairs'
-
-Plug 'dense-analysis/ale'
-" Plug 'itchyny/lightline.vim'
-" Plug 'maximbaz/lightline-ale'
-"
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" markdown content
-Plug 'jszakmeister/markdown2ctags'
-" Plug 'wfxr/minimap.vim'
-"Plug 'wfxr/minimap.vim', {'do': ':!cargo install --locked code-minimap'}
-Plug 'tpope/vim-surround'
-
-Plug 'majutsushi/tagbar'
-" Plug 'Yggdroot/LeaderF' 
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
-Plug 'linjiX/LeaderF-git'
-
-" for git 
-Plug 'tpope/vim-fugitive'
-Plug 'zivyangll/git-blame.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
-Plug 'junegunn/gv.vim'
-Plug 'rhysd/conflict-marker.vim'
-
-Plug 'APZelos/blamer.nvim'
-
-Plug 'lilydjwg/colorizer'
-
-call plug#end()
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
-" disable the default highlight group
-let g:conflict_marker_highlight_group = ''
-" Include text after begin and end markers
-" let g:conflict_marker_begin = '^<<<<<<< .*$'
-" let g:conflict_marker_end   = '^>>>>>>> .*$'
-highlight ConflictMarkerBegin guibg=#2f7366
-highlight ConflictMarkerOurs guibg=#2e5049
-highlight ConflictMarkerTheirs guibg=#344f69
-highlight ConflictMarkerEnd guibg=#2f628e
-highlight ConflictMarkerCommonAncestorsHunk guibg=#754a81
-"co 
-"ct
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" fzf setting
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>zh :History<cr>
-nmap <silent> <leader>zf :Files<cr>
-nmap <silent> <leader>zg :GFiles?<cr>
-nmap <silent> <leader>zt :Tags<cr>
-nmap <silent> <leader>zl :Lines<cr>
-nmap <silent> <leader>zp :Locate<space>
-nmap <C-p> :Files<CR>
-" nmap <C-b> :Buffers<CR>
-let g:fzf_action = { 'ctrl-e': 'edit' }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Leaderf 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:Lf_GtagsAutoGenerate = 1
-" don't show the help in normal mode
-let g:Lf_HideHelp = 0
-let g:Lf_UseCache = 1
-let g:Lf_UseVersionControlTool = 0
-let g:Lf_IgnoreCurrentBufferName = 1
-" popup mode
-" let g:Lf_WindowPosition = 'popup'
-" let g:Lf_PreviewInPopup = 1
-let g:Lf_PreviewInPopup = 0
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
-let g:Lf_ShortcutF = "<leader>f"
-let g:Lf_DefaultMode = "Regex"
-" https://github.com/ryanoasis/nerd-fonts
-let g:Lf_ShowDevIcons = 1
-noremap <leader>f :<C-U><C-R>=printf("Leaderf file %s", "")<CR><CR>
-noremap <leader>b :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-" noremap <leader>m :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>l :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
-noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 
-noremap <C-B> :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR>
-noremap <C-F> :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
-" search visually selected text literally
-xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
-noremap go :<C-U>Leaderf! rg --recall<CR>
-
-" should use `Leaderf gtags --update` first
-" let g:Lf_GtagsAutoGenerate = 0
-" let g:Lf_Gtagslabel = 'native-pygments'
-" noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
-" noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
-" noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
-" noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
-" noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " asyncrun setting
@@ -302,8 +146,6 @@ nmap <silent> <leader>hl <Plug>MarkSet
 nmap <silent> <leader>hh <Plug>MarkClear
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
-
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
@@ -318,7 +160,8 @@ nmap <silent> rn <Plug>(coc-rename)
 " nmap <silent> Cr <Plug>(coc-references)
 
 " Refactoring mappings
-nmap CR <Plug>(coc-rename)
+"not working, nvim functions
+nmap CR  <Plug>(coc-rename)
 nmap CF  <Plug>(coc-format)
 xmap CF  <Plug>(coc-format-selected)
 nmap CA  <Plug>(coc-codeaction)
@@ -396,10 +239,6 @@ let airline#extensions#ale#open_lnum_symbol = '(L'
 let airline#extensions#ale#close_lnum_symbol = ')'
 
 
-nmap <tab> :bn<cr>
-nmap <C-n> :bn<cr>
-nmap <S-tab> :bp<cr>
-nmap <C-q> :bd<cr>
 
 
 
