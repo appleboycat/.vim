@@ -42,8 +42,8 @@ autocmd InsertEnter * se cul
 autocmd! bufwritepost .vimrc source ~/.vimrc
 autocmd FileType * call s:compileByFileType()
 function! s:compileByFileType()
-  if &filetype=="c"
-    if has("cscope")
+  " if &filetype=="c"
+    " if has("cscope")
       " set csprg=/home/hongdouz/bin/cscope
       set csto=1
       set cst
@@ -56,7 +56,7 @@ function! s:compileByFileType()
       cs add $CSCOPE_DB
       endif
       set csverb
-    endif
+    " endif
       """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
       " cscope setting
       """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -70,7 +70,7 @@ function! s:compileByFileType()
       nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
       "nmap <C-@>d :cs find g <C-R>=expand(build_command_tree)<CR><CR>
       nmap <C-@>r :cs find g build_command_tree<CR>
-  elseif &filetype=="rust"
+  " elseif &filetype=="rust"
       " Use `[g` and `]g` to navigate diagnostics
       " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 
@@ -83,7 +83,7 @@ function! s:compileByFileType()
       " Formatting selected code.
       xmap <leader>fmt  <Plug>(coc-format-selected)
       nmap <leader>fmt  <Plug>(coc-format-selected)
-  endif
+  " endif
 endfunction
 
 
