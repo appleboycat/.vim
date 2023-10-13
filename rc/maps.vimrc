@@ -61,25 +61,26 @@ let g:Lf_DefaultMode = "Regex"
 " https://github.com/ryanoasis/nerd-fonts
 let g:Lf_ShowDevIcons = 1
 
-noremap <leader>f  :<C-U><C-R>=printf("Leaderf file %s", "")<CR><CR>
-noremap <leader>b  :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
-noremap <leader>ru :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-noremap <leader>l  :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
-noremap <leader>ft :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
+noremap <leader>ff  :<C-U><C-R>=printf("Leaderf file %s", "")<CR><CR>
+noremap <leader>fb  :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+noremap <leader>fr  :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+noremap <leader>fl  :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
+noremap <leader>ft  :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 
-noremap <leader>g  :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
-noremap <leader>ga :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
-noremap <leader>gb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
+noremap <leader>fg  :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
+noremap <leader>fa  :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
+noremap <leader>fc  :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 " search visually selected text literally
 " xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
 " noremap go :<C-U>Leaderf! rg --recall<CR>
 "Esc to close float window"
+"sudo apt install global
 " should use `Leaderf gtags --update` first
-" let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_GtagsAutoGenerate = 1
 " let g:Lf_Gtagslabel = 'native-pygments'
 " noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
-" noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
-" noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
-" noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
-" noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
+noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+noremap <leader>fo :<C-U><C-R>=printf("Leaderf! gtags --recall %s", "")<CR><CR>
+noremap <leader>fn :<C-U><C-R>=printf("Leaderf gtags --next %s", "")<CR><CR>
+noremap <leader>fp :<C-U><C-R>=printf("Leaderf gtags --previous %s", "")<CR><CR>
 

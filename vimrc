@@ -20,7 +20,7 @@ set number
 "set number relativenumber
 set cursorline
 "set cursorcolumn
-set noswapfile
+" set noswapfile
 set incsearch 
 set wrapscan
 set formatoptions=
@@ -28,6 +28,8 @@ set formatoptions=
 """""""""""""""""""""""""""""""""""
 "must set before syntax enable
 set background=dark
+" tail -f
+" set autoread
 
 if &t_Co > 1
   syntax enable
@@ -74,12 +76,12 @@ function! s:compileByFileType()
       " Use `[g` and `]g` to navigate diagnostics
       " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 
-      nmap <C-@>g <Plug>(coc-definition)
-      nmap <C-@>y <Plug>(coc-type-definition)
-      nmap <C-@>i <Plug>(coc-implementation)
-      nmap <C-@>r <Plug>(coc-references)
+      nmap <leader>g <Plug>(coc-definition)
+      nmap <leader>y <Plug>(coc-type-definition)
+      nmap <leader>i <Plug>(coc-implementation)
+      nmap <leader>r <Plug>(coc-references)
       " Symbol renaming.
-      nmap <F2>rn <Plug>(coc-rename)
+      " nmap <F2>rn <Plug>(coc-rename)
       " Formatting selected code.
       xmap <leader>fmt  <Plug>(coc-format-selected)
       nmap <leader>fmt  <Plug>(coc-format-selected)
@@ -152,7 +154,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <silent> rn <Plug>(coc-rename)
+" nmap <silent> rn <Plug>(coc-rename)
 " Go to mappings
 " nmap <silent> Cd <Plug>(coc-definition)
 " nmap <silent> Ct <Plug>(coc-type-definition)
