@@ -18,6 +18,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
+"ds( cs({  yss("
 Plug 'skywind3000/asyncrun.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'NoahTheDuke/vim-just'
