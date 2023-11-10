@@ -62,14 +62,14 @@ let g:Lf_DefaultMode = "Regex"
 let g:Lf_ShowDevIcons = 1
 
 noremap <leader>ff  :<C-U><C-R>=printf("Leaderf file %s", "")<CR><CR>
+noremap <leader>fg  :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
 noremap <leader>fb  :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
 noremap <leader>fr  :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 noremap <leader>fl  :<C-U><C-R>=printf("Leaderf line %s", "")<CR><CR>
 noremap <leader>ft  :<C-U><C-R>=printf("Leaderf bufTag %s", "")<CR><CR>
 
 " noremap <leader>fg  :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR>
-noremap <leader>fg  :<C-U><C-R>=printf("Leaderf! rg -e ")<CR>
-noremap <leader>fa  :<C-U><C-R>=printf("Leaderf! rg -e %s ", expand("<cword>"))<CR><CR>
+noremap <leader>fa  :<C-U><C-R>=printf("Leaderf! rg -e ")<CR>
 noremap <leader>fc  :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s ", expand("<cword>"))<CR><CR>
 " search visually selected text literally
 " xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>

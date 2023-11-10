@@ -2,7 +2,26 @@
   "inlayHint.enable": true,
   "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/16.0.2/clangd_16.0.2/bin/clangd",
   "rust-analyzer.updates.prompt": false,
-  "rust-analyzer.procMacro.attributes.enable": true
+  "rust-analyzer.procMacro.attributes.enable": true,
+
+      // hover
+    "hover.target": "float",
+    "hover.autoHide": false,
+    "hover.floatConfig": {},
+    "hover.previewMaxHeight": 12,
+
+    // notification
+    "notification.highlightGroup": "CocFloating",
+    "notification.border": true,
+    "notification.timeout": 10000,
+    "notification.winblend": 30,
+    "notification.focusable": true,
+    "notification.disabledProgressSources": [],
+    "notification.maxWidth": 60,
+    "notification.maxHeight": 10,
+    "notification.marginRight": 1,
+    "notification.minProgressWidth": 30
+
 }
 
 

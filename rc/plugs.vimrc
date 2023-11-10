@@ -11,7 +11,8 @@ Plug 'jremmen/vim-ripgrep'
 "Plug 'inkarkat/vim-mark' not working 
 Plug 'junegunn/vim-easy-align'
 Plug 'universal-ctags/ctags'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
+" Plug 'scrooloose/nerdtree'
 "Plug 'scrooloose/nerdcommender'
 "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "Plug 'Valloric/YouCompleteMe', { 'do': function('BuildYCM') }

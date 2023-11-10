@@ -35,6 +35,7 @@ if &t_Co > 1
   syntax enable
 endif
 
+
 source ~/.vim/rc/displayz.vimrc
 source ~/.vim/rc/plugs.vimrc
 source ~/.vim/rc/maps.vimrc
@@ -77,11 +78,11 @@ function! s:compileByFileType()
       " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 
       nmap <leader>g <Plug>(coc-definition)
-      nmap <leader>y <Plug>(coc-type-definition)
+      nmap <leader>t <Plug>(coc-type-definition)
       nmap <leader>i <Plug>(coc-implementation)
       nmap <leader>r <Plug>(coc-references)
       " Symbol renaming.
-      " nmap <F2>rn <Plug>(coc-rename)
+      nmap <leader>rn <Plug>(coc-rename)
       " Formatting selected code.
       xmap <leader>fmt  <Plug>(coc-format-selected)
       nmap <leader>fmt  <Plug>(coc-format-selected)
@@ -151,7 +152,7 @@ nmap <silent> <leader>hh <Plug>MarkClear
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gD <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " nmap <silent> rn <Plug>(coc-rename)
@@ -164,21 +165,29 @@ nmap <silent> gr <Plug>(coc-references)
 " Refactoring mappings
 "not working, nvim functions
 nmap CR  <Plug>(coc-rename)
+nmap <leader>rn  <Plug>(coc-rename)
+xmap <leader>rn  <Plug>(coc-rename)
+nmap <leader>a  <Plug>(coc-codeaction)
+xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap CF  <Plug>(coc-format)
 xmap CF  <Plug>(coc-format-selected)
-nmap CA  <Plug>(coc-codeaction)
-xmap CA  <Plug>(coc-codeaction-selected)
 nmap CX  <Plug>(coc-fix-current)
 
+nmap CC  <Plug>(coc-cursors-word)
+" :CocSearch
+
 " Coc lists mappings
-nnoremap <silent> Cld  :<C-u>CocList diagnostics<cr>
-nnoremap <silent> Cle  :<C-u>CocList extensions<cr>
-nnoremap <silent> Clc  :<C-u>CocList commands<cr>
-nnoremap <silent> Clo  :<C-u>CocList outline<cr>
-nnoremap <silent> Cls  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent> Cld  :<C-u>CocList diagnostics<cr>
+" nnoremap <silent> Cle  :<C-u>CocList extensions<cr>
+" nnoremap <silent> Clc  :<C-u>CocList commands<cr>
+" nnoremap <silent> Clo  :<C-u>CocList outline<cr>
+" nnoremap <silent> Cls  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>dg :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>lo  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>ls  :<C-u>CocList -I symbols<cr>
 
 " Show info mappings
-nnoremap <silent> Ci :call CocAction('doHover')<CR>
+nnoremap <silent> <leader>ca :call CocAction('doHover')<CR>
 
 " Highlight current identifier usage in current document
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -187,15 +196,21 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 """""""""""""""""""""""""""""""""""""""""""""
 " NerdTree
 """""""""""""""""""""""""""""""""""""""""""""
-"map <F8> :NERDTreeMirror<CR>
-map <F7> :NERDTreeToggle<CR>
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-"let g:NERDTreeShowIgnoredStatus = 1
+" to avoid nerdtree [E117: Unknown function: nerdtree#runningMac] error
+" autocmd vimenter * NERDTree
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+" "map <F8> :NERDTreeMirror<CR>
+map <F3> :NERDTreeToggle<CR>
+set runtimepath+=~/.vim/plugged/nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeShowIgnoredStatus = 1
 let NERDTreeWinPos='right'
 "let NERDTreeWinPos='left'
 let NERDTreeWinSize=50
 "let g:NERDTreeNodeDelimiter = "\u00a0"
-let g:NERDTreeNodeDelimiter = " "
+"
 
 """""""""""""""""""""""""""""""""""""""""""""
 "nerdcommender
@@ -395,30 +410,34 @@ nnoremap <C-LeftMouse> :ALEGoToDefinition<CR>
 " statusline%{ALEGetStatusLine()}
 
 
+" if 0
+" "if has("code-minimap")
+    " " for minimap
+    " let g:minimap_width = 10
+    " let g:minimap_auto_start = 1
+    " let g:minimap_auto_start_win_enter =  1
+    " nnoremap <silent> `` :nohlsearch<CR>:call minimap#vim#ClearColorSearch()<CR>
+" endif
 
 
-" for netrw
-let g:netrw_hide = 1 "设置默认隐藏
-let g:netrw_liststyle = 3 " tree 模式显示风格
-let g:netrw_banner = 0 " 显示帮助信息
-let g:netrw_browse_split = 0 "控制 <CR> 直接在当前窗口打开光标下文件
-let g:netrw_winsize = 30 " 占用宽度
-let g:netrw_list_hide= '\(^\|\s\s\)\zs\.\S\+' " 需要隐藏的文件
-let g:netrw_localrmdir = 'trash' "默认的删除工具使用 trash
-let g:netrw_altv = 1 " 控制 v 分裂的窗口位于右边
-let g:netrw_preview = 1 " 默认是水平分割, 此项设置使之垂直分割
-let g:netrw_alto = 0 " 控制预览窗口位于左侧或右侧, 与 netrw_preview 共同作用
+
+" have some trouble closing it
+" map <silent> <F7> :Vexplore<cr>
+" let g:netrw_hide = 1 "设置默认隐藏
+" let g:netrw_liststyle = 3 " tree 模式显示风格
+" let g:netrw_banner = 0 " 不显示帮助信息
+" let g:netrw_browse_split = 0 "控制 <CR> 直接在当前窗口打开光标下文件
+" let g:netrw_winsize = 30 " 占用宽度
+" let g:netrw_list_hide= '\(^\|\s\s\)\zs\.\S\+' " 需要隐藏的文件
+" let g:netrw_localrmdir = 'trash' "默认的删除工具使用 trash
+" let g:netrw_altv = 1 " 控制 v 分裂的窗口位于右边
+" let g:netrw_preview = 1 " 默认是水平分割, 此项设置使之垂直分割
+" let g:netrw_alto = 0 " 控制预览窗口位于左侧或右侧, 与 netrw_preview 共同作用
 " let g:netrw_chgwin = 2 " 控制按下 <CR> 的新文件在位于屏幕右侧的 2 号窗口打开, Lex 默认会设为 2
+" let g:netrw_sort_by = 'time'
+" let g:netrw_sort_direction = 'reverse'
 
 
-if 0
-"if has("code-minimap")
-    " for minimap
-    let g:minimap_width = 10
-    let g:minimap_auto_start = 1
-    let g:minimap_auto_start_win_enter =  1
-    nnoremap <silent> `` :nohlsearch<CR>:call minimap#vim#ClearColorSearch()<CR>
-endif
 
 " for tarbar
 map <silent> <F9> :TagbarToggle<cr>
@@ -427,7 +446,6 @@ let g:tagbar_width=30 " 设置tagbar的宽度
 let g:tagbar_left = 1
 " autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.rs call tagbar#autoopen()　
 " autocmd BufReadPost *.rs call tagbar#autoopen()　
-" autocmd vimenter * NERDTree
 "打开vim时自动打开
 " let g:tagbar_vertical=15
 let g:tagbar_sort=0
