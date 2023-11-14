@@ -18,9 +18,9 @@ set tabstop=4
 set shiftwidth=4
 set number
 "set number relativenumber
-set cursorline
+"set cursorline
 "set cursorcolumn
-" set noswapfile
+"set noswapfile
 set incsearch 
 set wrapscan
 set formatoptions=
@@ -196,19 +196,17 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 """""""""""""""""""""""""""""""""""""""""""""
 " NerdTree
 """""""""""""""""""""""""""""""""""""""""""""
-" to avoid nerdtree [E117: Unknown function: nerdtree#runningMac] error
 " autocmd vimenter * NERDTree
 execute pathogen#infect()
-syntax on
-filetype plugin indent on
+" syntax on
+" filetype plugin indent on
 " "map <F8> :NERDTreeMirror<CR>
 map <F3> :NERDTreeToggle<CR>
-set runtimepath+=~/.vim/plugged/nerdtree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDTreeShowIgnoredStatus = 1
-let NERDTreeWinPos='right'
-"let NERDTreeWinPos='left'
-let NERDTreeWinSize=50
+" let NERDTreeWinPos='right'
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=35
 "let g:NERDTreeNodeDelimiter = "\u00a0"
 "
 
@@ -443,7 +441,7 @@ nnoremap <C-LeftMouse> :ALEGoToDefinition<CR>
 map <silent> <F9> :TagbarToggle<cr>
 let g:tagbar_ctags_bin='~/.vim/bin/ctags'  " 设置ctags所在路径
 let g:tagbar_width=30 " 设置tagbar的宽度
-let g:tagbar_left = 1
+let g:tagbar_right = 1
 " autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.rs call tagbar#autoopen()　
 " autocmd BufReadPost *.rs call tagbar#autoopen()　
 "打开vim时自动打开
