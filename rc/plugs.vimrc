@@ -27,7 +27,12 @@ Plug 'NoahTheDuke/vim-just'
 " 2022.7.27 for rust
 Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" 2023.11.17 markdown preview
+" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" if I have nodejs
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+" 
 " Plug 'jiangmiao/auto-pairs'
 
 Plug 'dense-analysis/ale'

@@ -128,6 +128,9 @@ nmap ySs <Plug>YSsurround
 nmap yss <Plug>Yssurround
 nmap yS <Plug>YSurround
 nmap ys <Plug>Ysurround
+vnoremap <silent> <Plug>(coc-snippets-select) :call coc#rpc#notify('doKeymap', ['coc-snippets-select'])
+xnoremap <silent> <Plug>(coc-convert-snippet) :call coc#rpc#notify('doKeymap', ['coc-convert-snippet'])
+nnoremap <SNR>148_: :=v:count ? v:count : ''
 nmap <C-@>r :cs find g build_command_tree
 nmap <Nul>r :cs find g build_command_tree
 nmap <C-@>d :cs find d =expand("<cword>")
@@ -146,9 +149,6 @@ nmap <C-@>g :cs find g =expand("<cword>")
 nmap <Nul>g :cs find g =expand("<cword>")
 nmap <C-@>s :cs find s =expand("<cword>")
 nmap <Nul>s :cs find s =expand("<cword>")
-vnoremap <silent> <Plug>(coc-snippets-select) :call coc#rpc#notify('doKeymap', ['coc-snippets-select'])
-xnoremap <silent> <Plug>(coc-convert-snippet) :call coc#rpc#notify('doKeymap', ['coc-convert-snippet'])
-nnoremap <SNR>134_: :=v:count ? v:count : ''
 xnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote(netrw#GX()))
 nnoremap <silent> <Plug>Colorizer :ColorToggle
@@ -398,7 +398,7 @@ set incsearch
 set laststatus=2
 set omnifunc=omni
 set ruler
-set runtimepath=~/.vim,~/.vim/plugged/vim-ripgrep/,~/.vim/plugged/vim-easy-align/,~/.vim/plugged/ctags/,~/.vim/plugged/nerdtree/,~/.fzf/,~/.vim/plugged/fzf.vim/,~/.vim/plugged/vim-surround/,~/.vim/plugged/asyncrun.vim/,~/.vim/plugged/vim-cpp-enhanced-highlight/,~/.vim/plugged/vim-just/,~/.vim/plugged/rust.vim/,~/.vim/plugged/coc.nvim/,~/.vim/plugged/ale/,~/.vim/plugged/vim-airline/,~/.vim/plugged/vim-airline-themes/,~/.vim/plugged/markdown2ctags/,~/.vim/plugged/tagbar/,~/.vim/plugged/LeaderF/,~/.vim/plugged/LeaderF-git/,~/.vim/plugged/vim-fugitive/,~/.vim/plugged/git-blame.vim/,~/.vim/plugged/vim-gitgutter/,~/.vim/plugged/vim-signify/,~/.vim/plugged/gv.vim/,~/.vim/plugged/conflict-marker.vim/,~/.vim/plugged/blamer.nvim/,~/.vim/plugged/colorizer/,/usr/local/share/vim/vimfiles,/usr/local/share/vim/vim90,/usr/local/share/vim/vimfiles/after,~/.vim/plugged/vim-cpp-enhanced-highlight/after,~/.vim/plugged/vim-just/after,~/.vim/plugged/rust.vim/after,~/.vim/after,~/.config/coc/extensions/node_modules/coc-snippets
+set runtimepath=~/.vim,~/.vim/plugged/vim-ripgrep/,~/.vim/plugged/vim-easy-align/,~/.vim/plugged/ctags/,~/.vim/plugged/nerdtree/,~/.fzf/,~/.vim/plugged/fzf.vim/,~/.vim/plugged/vim-surround/,~/.vim/plugged/asyncrun.vim/,~/.vim/plugged/vim-cpp-enhanced-highlight/,~/.vim/plugged/vim-just/,~/.vim/plugged/rust.vim/,~/.vim/plugged/coc.nvim/,~/.vim/plugged/markdown-preview.nvim/,~/.vim/plugged/ale/,~/.vim/plugged/vim-airline/,~/.vim/plugged/vim-airline-themes/,~/.vim/plugged/markdown2ctags/,~/.vim/plugged/tagbar/,~/.vim/plugged/LeaderF/,~/.vim/plugged/LeaderF-git/,~/.vim/plugged/vim-fugitive/,~/.vim/plugged/git-blame.vim/,~/.vim/plugged/vim-gitgutter/,~/.vim/plugged/vim-signify/,~/.vim/plugged/gv.vim/,~/.vim/plugged/conflict-marker.vim/,~/.vim/plugged/blamer.nvim/,~/.vim/plugged/colorizer/,/usr/local/share/vim/vimfiles,/usr/local/share/vim/vim90,/usr/local/share/vim/vimfiles/after,~/.config/coc/extensions/node_modules/coc-snippets,~/.vim/plugged/vim-cpp-enhanced-highlight/after,~/.vim/plugged/vim-just/after,~/.vim/plugged/rust.vim/after,~/.vim/after
 set sessionoptions=blank,buffers,folds,help,options,tabpages,winsize,terminal,sesdir
 set shiftwidth=4
 set showmatch
@@ -423,23 +423,29 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +0 ~/metax_hpl/src/pgesv/pdgesv.rs
+badd +0 ~/.vim/rc/plugs.vimrc
 argglobal
 %argdel
-edit ~/metax_hpl/src/pgesv/pdgesv.rs
+$argadd ~/.vim/rc/plugs.vimrc
+edit ~/.vim/rc/plugs.vimrc
 argglobal
-balt ~/metax_hpl/src/pgesv/pdgesv.rs
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> ,hu <Plug>(GitGutterUndoHunk)
 nmap <buffer> ,hs <Plug>(GitGutterStageHunk)
 xmap <buffer> ,hs <Plug>(GitGutterStageHunk)
-onoremap <buffer> <silent> [[ :call rust#Jump('o', 'Back')
-xnoremap <buffer> <silent> [[ :call rust#Jump('v', 'Back')
-nnoremap <buffer> <silent> [[ :call rust#Jump('n', 'Back')
-onoremap <buffer> <silent> ]] :call rust#Jump('o', 'Forward')
-xnoremap <buffer> <silent> ]] :call rust#Jump('v', 'Forward')
-nnoremap <buffer> <silent> ]] :call rust#Jump('n', 'Forward')
+vnoremap <buffer> <silent> [" :exe "normal! gv"|call search('\%(^\s*".*\n\)\%(^\s*"\)\@!', "bW")
+nnoremap <buffer> <silent> [" :call search('\%(^\s*".*\n\)\%(^\s*"\)\@!', "bW")
+vnoremap <buffer> <silent> [] m':exe "normal! gv"|call search('^\s*end\(f\%[unction]\|\(export\s\+\)\?def\)\>', "bW")
+nnoremap <buffer> <silent> [] m':call search('^\s*end\(f\%[unction]\|\(export\s\+\)\?def\)\>', "bW")
+vnoremap <buffer> <silent> [[ m':exe "normal! gv"|call search('^\s*\(fu\%[nction]\|\(export\s\+\)\?def\)\>', "bW")
+nnoremap <buffer> <silent> [[ m':call search('^\s*\(fu\%[nction]\|\(export\s\+\)\?def\)\>', "bW")
+vnoremap <buffer> <silent> ]" :exe "normal! gv"|call search('^\(\s*".*\n\)\@<!\(\s*"\)', "W")
+nnoremap <buffer> <silent> ]" :call search('^\(\s*".*\n\)\@<!\(\s*"\)', "W")
+vnoremap <buffer> <silent> ][ m':exe "normal! gv"|call search('^\s*end\(f\%[unction]\|\(export\s\+\)\?def\)\>', "W")
+nnoremap <buffer> <silent> ][ m':call search('^\s*end\(f\%[unction]\|\(export\s\+\)\?def\)\>', "W")
+vnoremap <buffer> <silent> ]] m':exe "normal! gv"|call search('^\s*\(fu\%[nction]\|\(export\s\+\)\?def\)\>', "W")
+nnoremap <buffer> <silent> ]] m':call search('^\s*\(fu\%[nction]\|\(export\s\+\)\?def\)\>', "W")
 xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
 omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
@@ -457,14 +463,14 @@ setlocal breakindentopt=
 setlocal bufhidden=
 setlocal buflisted
 setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},!^F,o,O,0[,0],0(,0)
-setlocal cinoptions=L0,(s,Ws,J1,j1,m1
+setlocal nocindent
+setlocal cinkeys=0{,0},0),0],:,0#,!^F,o,O,e
+setlocal cinoptions=
 setlocal cinscopedecls=public,protected,private
-setlocal cinwords=for,if,else,while,loop,impl,mod,unsafe,trait,struct,enum,fn,extern,macro
+setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
-setlocal comments=s0:/*!,ex:*/,s1:/*,mb:*,ex:*/,:///,://!,://
-setlocal commentstring=//%s
+setlocal comments=sO:#\ -,mO:#\ \ ,eO:##,:#,sO:\"\ -,mO:\"\ \ ,eO:\"\",:\"
+setlocal commentstring=\"%s
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -473,17 +479,16 @@ setlocal nocopyindent
 setlocal cryptmethod=
 setlocal nocursorbind
 setlocal nocursorcolumn
-set cursorline
-setlocal cursorline
+setlocal nocursorline
 setlocal cursorlineopt=both
-setlocal define=
+setlocal define=\\v^\\s*export\\s*(def|const|var|final)
 setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
-setlocal errorformat=%-G,%-Gerror:\ aborting\ %.%#,%-Gerror:\ Could\ not\ compile\ %.%#,%Eerror:\ %m,%Eerror[E%n]:\ %m,%Wwarning:\ %m,%Inote:\ %m,%C\ %#-->\ %f:%l:%c,%E\ \ left:%m,%C\ right:%m\ %f:%l:%c,%Z,%f:%l:%c:\ %t%*[^:]:\ %m,%f:%l:%c:\ %*\\d:%*\\d\ %t%*[^:]:\ %m,%-G%f:%l\ %s,%-G%*[\ ]^,%-G%*[\ ]^%*[~],%-G%*[\ ]...,%-G%\\s%#Downloading%.%#,%-G%\\s%#Checking%.%#,%-G%\\s%#Compiling%.%#,%-G%\\s%#Finished%.%#,%-G%\\s%#error:\ Could\ not\ compile\ %.%#,%-G%\\s%#To\ learn\ more\\,%.%#,%-G%\\s%#For\ more\ information\ about\ this\ error\\,%.%#,%-Gnote:\ Run\ with\ `RUST_BACKTRACE=%.%#,%.%#panicked\ at\ \\'%m\\'\\,\ %f:%l:%c
+setlocal errorformat=
 setlocal expandtab
-if &filetype != 'rust'
-setlocal filetype=rust
+if &filetype != 'vim'
+setlocal filetype=vim
 endif
 setlocal fillchars=
 setlocal fixendofline
@@ -498,19 +503,19 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croqnlj
+setlocal formatoptions=croql
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
 setlocal imsearch=-1
-setlocal include=\\v^\\s*(pub\\s+)?use\\s+\\zs(\\f|:)+
-setlocal includeexpr=rust#IncludeExpr(v:fname)
-setlocal indentexpr=GetRustIndent(v:lnum)
-setlocal indentkeys=0{,0},!^F,o,O,0[,0],0(,0)
+setlocal include=\\v^\\s*import\\s*(autoload)?
+setlocal includeexpr=
+setlocal indentexpr=vimindent.Expr()
+setlocal indentkeys=0{,0},0),0],!^F,o,O,e,=endif,=enddef,=endfu,=endfor,=endwh,=endtry,=},=else,=cat,=finall,=END,0\\,0=\"\\\ ,0=#\\\ 
 setlocal noinfercase
-setlocal iskeyword=@,48-57,_,192-255
-setlocal keywordprg=
+setlocal iskeyword=@,48-57,_,192-255,#
+setlocal keywordprg=:help
 setlocal nolinebreak
 setlocal nolisp
 setlocal lispoptions=
@@ -518,8 +523,8 @@ setlocal lispwords=
 setlocal nolist
 setlocal listchars=
 setlocal makeencoding=
-setlocal makeprg=cargo\ $*
-setlocal matchpairs=(:),{:},[:],<:>
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=bin,octal,hex
@@ -551,17 +556,17 @@ setlocal spellfile=
 setlocal spelllang=en
 setlocal spelloptions=
 setlocal statusline=%!airline#statusline(1)
-setlocal suffixesadd=.rs
+setlocal suffixesadd=
 setlocal swapfile
 setlocal synmaxcol=3000
-if &syntax != 'rust'
-setlocal syntax=rust
+if &syntax != 'vim'
+setlocal syntax=vim
 endif
 setlocal tabstop=4
 setlocal tagcase=
 setlocal tagfunc=
 setlocal tags=
-setlocal textwidth=99
+setlocal textwidth=78
 setlocal thesaurus=
 setlocal thesaurusfunc=
 setlocal noundofile
@@ -576,12 +581,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 7 - ((6 * winheight(0) + 22) / 44)
+let s:l = 66 - ((41 * winheight(0) + 22) / 44)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 7
-normal! 0
+keepjumps 66
+normal! 02|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

@@ -600,6 +600,10 @@ let g:blamer_date_format = ' %y/%m/%d'
 " default: link Blamer Comment
 " highlight Blamer guifg=lightgrey
 
+"markdown-preview
+"
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
 
 
 
