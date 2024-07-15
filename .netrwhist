@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =2
+let g:netrw_dirhist_2='/home/zzz/metax_hpl/src'
+let g:netrw_dirhist_1='/home/zzz'
+let g:netrw_dirhist_0='/home/zzz/metax_hpl/src'
+let g:netrw_dirhist_9='/home/zzz'
+let g:netrw_dirhist_8='/home/zzz/metax_hpl/src'
+let g:netrw_dirhist_7='/home/zzz'
+let g:netrw_dirhist_6='/home/zzz/metax_hpl/src/pauxil'
+let g:netrw_dirhist_5='/home/zzz'
+let g:netrw_dirhist_4='/home/zzz/metax_hpl/src/pauxil'
+let g:netrw_dirhist_3='/home/zzz'
