@@ -33,16 +33,11 @@ nmap 	 :bn
 nmap  :bn
 nmap  :Files
 nmap  :bd
-nmap ,fmt <Plug>(coc-format-selected)
-xmap ,fmt <Plug>(coc-format-selected)
-nmap ,i <Plug>(coc-implementation)
-nmap ,t <Plug>(coc-type-definition)
-nmap ,g <Plug>(coc-definition)
 nmap ,tc <Plug>Colorizer
 nnoremap <silent> ,b :LeaderfBuffer
 nnoremap <silent> ,f :LeaderfFile
 vmap <silent> ,r <Plug>MarkRegex
-nmap ,r <Plug>(coc-references)
+nmap <silent> ,r <Plug>MarkRegex
 vmap <silent> ,m <Plug>MarkSet
 xmap ,cu <Plug>NERDCommenterUncomment
 nmap ,cu <Plug>NERDCommenterUncomment
@@ -130,25 +125,7 @@ nmap yS <Plug>YSurround
 nmap ys <Plug>Ysurround
 vnoremap <silent> <Plug>(coc-snippets-select) :call coc#rpc#notify('doKeymap', ['coc-snippets-select'])
 xnoremap <silent> <Plug>(coc-convert-snippet) :call coc#rpc#notify('doKeymap', ['coc-convert-snippet'])
-nnoremap <SNR>167_: :=v:count ? v:count : ''
-nmap <C-@>r :cs find g build_command_tree
-nmap <Nul>r :cs find g build_command_tree
-nmap <C-@>d :cs find d =expand("<cword>")
-nmap <Nul>d :cs find d =expand("<cword>")
-nmap <C-@>i :cs find i =expand("<cfile>")
-nmap <Nul>i :cs find i =expand("<cfile>")
-nmap <C-@>f :cs find f =expand("<cfile>")
-nmap <Nul>f :cs find f =expand("<cfile>")
-nmap <C-@>e :cs find e =expand("<cword>")
-nmap <Nul>e :cs find e =expand("<cword>")
-nmap <C-@>t :cs find t =expand("<cword>")
-nmap <Nul>t :cs find t =expand("<cword>")
-nmap <C-@>c :cs find c =expand("<cword>")
-nmap <Nul>c :cs find c =expand("<cword>")
-nmap <C-@>g :cs find g =expand("<cword>")
-nmap <Nul>g :cs find g =expand("<cword>")
-nmap <C-@>s :cs find s =expand("<cword>")
-nmap <Nul>s :cs find s =expand("<cword>")
+nnoremap <SNR>139_: :=v:count ? v:count : ''
 xnoremap <silent> <Plug>NetrwBrowseXVis :call netrw#BrowseXVis()
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote(netrw#GX()))
 nnoremap <silent> <Plug>Colorizer :ColorToggle
@@ -386,9 +363,6 @@ set autoread
 set background=dark
 set backspace=indent,eol,start
 set completeopt=menu,menuone,preview,noselect,noinsert
-set cscopetag
-set cscopetagorder=1
-set cscopeverbose
 set expandtab
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set helplang=en
@@ -423,25 +397,17 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/c500/111/metax_src/metax_kernel/src/image/mod.rs
-badd +1 ~/c500/111/metax_src/metax_kernel/src/image/mcfb.rs
+badd +0 ~/.vim/bashr
 argglobal
 %argdel
-$argadd ~/c500/111/metax_src/metax_kernel/src/image/mod.rs
-edit ~/c500/111/metax_src/metax_kernel/src/image/mcfb.rs
+$argadd ~/.vim/bashr
+edit ~/.vim/bashr
 argglobal
-balt ~/c500/111/metax_src/metax_kernel/src/image/mod.rs
 let s:cpo_save=&cpo
 set cpo&vim
 nmap <buffer> ,hu <Plug>(GitGutterUndoHunk)
 nmap <buffer> ,hs <Plug>(GitGutterStageHunk)
 xmap <buffer> ,hs <Plug>(GitGutterStageHunk)
-onoremap <buffer> <silent> [[ :call rust#Jump('o', 'Back')
-xnoremap <buffer> <silent> [[ :call rust#Jump('v', 'Back')
-nnoremap <buffer> <silent> [[ :call rust#Jump('n', 'Back')
-onoremap <buffer> <silent> ]] :call rust#Jump('o', 'Forward')
-xnoremap <buffer> <silent> ]] :call rust#Jump('v', 'Forward')
-nnoremap <buffer> <silent> ]] :call rust#Jump('n', 'Forward')
 xmap <buffer> ac <Plug>(GitGutterTextObjectOuterVisual)
 omap <buffer> ac <Plug>(GitGutterTextObjectOuterPending)
 xmap <buffer> ic <Plug>(GitGutterTextObjectInnerVisual)
@@ -459,14 +425,14 @@ setlocal breakindentopt=
 setlocal bufhidden=
 setlocal buflisted
 setlocal buftype=
-setlocal cindent
-setlocal cinkeys=0{,0},!^F,o,O,0[,0],0(,0)
-setlocal cinoptions=L0,(s,Ws,J1,j1,m1
+setlocal nocindent
+setlocal cinkeys=0{,0},0),0],:,0#,!^F,o,O,e
+setlocal cinoptions=
 setlocal cinscopedecls=public,protected,private
-setlocal cinwords=for,if,else,while,loop,impl,mod,unsafe,trait,struct,enum,fn,extern,macro
+setlocal cinwords=if,else,while,do,for,switch
 setlocal colorcolumn=
-setlocal comments=s0:/*!,ex:*/,s1:/*,mb:*,ex:*/,:///,://!,://
-setlocal commentstring=//%s
+setlocal comments=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-
+setlocal commentstring=/*%s*/
 setlocal complete=.,w,b,u,t,i
 setlocal concealcursor=
 setlocal conceallevel=0
@@ -481,10 +447,10 @@ setlocal define=
 setlocal dictionary=
 setlocal nodiff
 setlocal equalprg=
-setlocal errorformat=%-G,%-Gerror:\ aborting\ %.%#,%-Gerror:\ Could\ not\ compile\ %.%#,%Eerror:\ %m,%Eerror[E%n]:\ %m,%Wwarning:\ %m,%Inote:\ %m,%C\ %#-->\ %f:%l:%c,%E\ \ left:%m,%C\ right:%m\ %f:%l:%c,%Z,%f:%l:%c:\ %t%*[^:]:\ %m,%f:%l:%c:\ %*\\d:%*\\d\ %t%*[^:]:\ %m,%-G%f:%l\ %s,%-G%*[\ ]^,%-G%*[\ ]^%*[~],%-G%*[\ ]...,%-G%\\s%#Downloading%.%#,%-G%\\s%#Checking%.%#,%-G%\\s%#Compiling%.%#,%-G%\\s%#Finished%.%#,%-G%\\s%#error:\ Could\ not\ compile\ %.%#,%-G%\\s%#To\ learn\ more\\,%.%#,%-G%\\s%#For\ more\ information\ about\ this\ error\\,%.%#,%-Gnote:\ Run\ with\ `RUST_BACKTRACE=%.%#,%.%#panicked\ at\ \\'%m\\'\\,\ %f:%l:%c
+setlocal errorformat=
 setlocal expandtab
-if &filetype != 'rust'
-setlocal filetype=rust
+if &filetype != ''
+setlocal filetype=
 endif
 setlocal fillchars=
 setlocal fixendofline
@@ -499,16 +465,16 @@ setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldtext=foldtext()
 setlocal formatexpr=
-setlocal formatoptions=croqnlj
+setlocal formatoptions=tcq
 setlocal formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
 setlocal formatprg=
 setlocal grepprg=
 setlocal iminsert=0
 setlocal imsearch=-1
-setlocal include=\\v^\\s*(pub\\s+)?use\\s+\\zs(\\f|:)+
-setlocal includeexpr=rust#IncludeExpr(v:fname)
-setlocal indentexpr=GetRustIndent(v:lnum)
-setlocal indentkeys=0{,0},!^F,o,O,0[,0],0(,0)
+setlocal include=
+setlocal includeexpr=
+setlocal indentexpr=
+setlocal indentkeys=0{,0},0),0],:,0#,!^F,o,O,e
 setlocal noinfercase
 setlocal iskeyword=@,48-57,_,192-255
 setlocal keywordprg=
@@ -519,8 +485,8 @@ setlocal lispwords=
 setlocal nolist
 setlocal listchars=
 setlocal makeencoding=
-setlocal makeprg=cargo\ $*
-setlocal matchpairs=(:),{:},[:],<:>
+setlocal makeprg=
+setlocal matchpairs=(:),{:},[:]
 setlocal modeline
 setlocal modifiable
 setlocal nrformats=bin,octal,hex
@@ -552,17 +518,17 @@ setlocal spellfile=
 setlocal spelllang=en
 setlocal spelloptions=
 setlocal statusline=%!airline#statusline(1)
-setlocal suffixesadd=.rs
+setlocal suffixesadd=
 setlocal swapfile
 setlocal synmaxcol=3000
-if &syntax != 'rust'
-setlocal syntax=rust
+if &syntax != ''
+setlocal syntax=
 endif
 setlocal tabstop=4
 setlocal tagcase=
 setlocal tagfunc=
 setlocal tags=
-setlocal textwidth=99
+setlocal textwidth=0
 setlocal thesaurus=
 setlocal thesaurusfunc=
 setlocal noundofile
@@ -577,12 +543,12 @@ setlocal wrap
 setlocal wrapmargin=0
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 58 - ((33 * winheight(0) + 22) / 45)
+let s:l = 1 - ((0 * winheight(0) + 22) / 44)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 58
-normal! 028|
+keepjumps 1
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf
